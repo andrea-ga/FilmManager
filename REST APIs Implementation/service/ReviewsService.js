@@ -226,19 +226,34 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
           else if(reviewerId != rows[0].reviewerId) {
               reject(403);
           }
+          else if(rows[0].completed != undefined && rows[0].completed == true) {
+              reject(409);
+          }
           else {
-            var sql2 = 'UPDATE reviews SET completed = ?';
-            var parameters = [review.completed];
+            var sql2 = 'UPDATE reviews SET ';
+            var parameters = [];
+            if(review.completed != undefined){
+                if (parameters.length != 0)
+                      sql2 = sql2.concat(', ');  
+                sql2 = sql2.concat('completed = ?');
+                parameters.push(review.completed);
+            } 
             if(review.reviewDate != undefined){
-              sql2 = sql2.concat(', reviewDate = ?');
+              if (parameters.length != 0)
+                    sql2 = sql2.concat(', ');  
+              sql2 = sql2.concat('reviewDate = ?');
               parameters.push(review.reviewDate);
             } 
             if(review.rating != undefined){
-                sql2 = sql2.concat(', rating = ?');
+                if (parameters.length != 0)
+                    sql2 = sql2.concat(', ');
+                sql2 = sql2.concat('rating = ?');
                 parameters.push(review.rating);
             } 
             if(review.review != undefined){
-                sql2 = sql2.concat(', review = ?');
+                if (parameters.length != 0)
+                    sql2 = sql2.concat(', ');
+                sql2 = sql2.concat('review = ?');
                 parameters.push(review.review);
             } 
             sql2 = sql2.concat(' WHERE filmId = ? AND reviewerId = ?');

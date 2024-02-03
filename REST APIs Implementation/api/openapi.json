@@ -791,8 +791,8 @@
             "cookieAuth": []
           }
         ],
-        "summary": "Complete a review",
-        "description": "The review of the film with ID filmId and issued to the user with ID reviewerId is completed. This operation only allows setting the \"completed\" property to the \"true\" value, and changing the values of the \"reviewDate\", \"rating\", and \"review\" properties. This operation can be performed only by the invited reviewer.",
+        "summary": "Update a review",
+        "description": "The review of the film with ID filmId and issued to the user with ID reviewerId is updated. This operation only allows setting the \"completed\" property to the \"true\" value, and changing the values of the \"reviewDate\", \"rating\", and \"review\" properties. This operation can be performed only by the invited reviewer.",
         "operationId": "updateSingleReview",
         "parameters": [
           {
@@ -841,6 +841,10 @@
           },
           "403": {
             "description": "Forbidden (the user is not the reviewer)",
+            "content": {}
+          },
+          "409": {
+            "description": "Conflict (the review has already been completed)",
             "content": {}
           },
           "404": {
@@ -966,7 +970,7 @@
             "content": {}
           },
           "403": {
-            "description": "Forbidden (the user is not the owner)",
+            "description": "Forbidden (the user is not the draft owner)",
             "content": {}
           },
           "404": {
@@ -1051,15 +1055,6 @@
         }
       }
     },
-
-
-
-
-
-
-
-
-
     "/api/films/public/assignments": {
       "post": {
         "tags": [
