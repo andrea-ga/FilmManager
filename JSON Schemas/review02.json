@@ -1,8 +1,8 @@
 {
     "$schema": "./review_schema.json",
     "filmId": 2,
-    "reviewerId": 3,
-    "delegatorId": 1,
+    "reviewerId": 1,
+    "delegateId": 3,
     "completed": true,
     "reviewDate": "2022-02-22",
     "rating": 9,

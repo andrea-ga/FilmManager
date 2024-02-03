@@ -18,6 +18,14 @@
       "type": "integer",
       "description": "unique identifier of the the user who has received this review invitation"
     },
+    "delegatorId": {
+      "type": "integer",
+      "description": "unique identifier of the the user who delegated this review invitation to this reviewer"
+    },
+    "delegateId": {
+      "type": "integer",
+      "description": "unique identifier of the the user who has been delegated by this reviewer for this review invitation"
+    },
     "completed": {
       "type": "boolean",
       "description": "true if the review has been completed, false otherwise"

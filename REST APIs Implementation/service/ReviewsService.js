@@ -17,7 +17,7 @@ var constants = require('../utils/constants.js');
  **/
  exports.getFilmReviews = function(req) {
   return new Promise((resolve, reject) => {
-      var sql = "SELECT r.filmId as fid, r.reviewerId as rid, completed, reviewDate, rating, review, c.total_rows FROM reviews r, (SELECT count(*) total_rows FROM reviews l WHERE l.filmId = ? ) c WHERE  r.filmId = ? ";
+      var sql = "SELECT r.filmId as fid, r.reviewerId as rid, delegatorId, delegateId, completed, reviewDate, rating, review, c.total_rows FROM reviews r, (SELECT count(*) total_rows FROM reviews l WHERE l.filmId = ? AND l.delegateID IS NULL) c WHERE  r.filmId = ? AND r.delegateID IS NULL";
       var params = getPagination(req);
       if (params.length != 2) sql = sql + " LIMIT ?,?";
       db.all(sql, params, (err, rows) => {
@@ -42,7 +42,7 @@ var constants = require('../utils/constants.js');
  **/
  exports.getFilmReviewsTotal = function(filmId) {
   return new Promise((resolve, reject) => {
-      var sqlNumOfReviews = "SELECT count(*) total FROM reviews WHERE filmId = ? ";
+      var sqlNumOfReviews = "SELECT count(*) total FROM reviews WHERE filmId = ? AND delegateId IS NULL";
       db.get(sqlNumOfReviews, [filmId], (err, size) => {
           if (err) {
               reject(err);
@@ -67,15 +67,31 @@ var constants = require('../utils/constants.js');
  **/
  exports.getSingleReview = function(filmId, reviewerId) {
   return new Promise((resolve, reject) => {
-      const sql = "SELECT filmId as fid, reviewerId as rid, completed, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
+      const sql = "SELECT filmId as fid, reviewerId as rid, delegateId, delegatorId, completed, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
       db.all(sql, [filmId, reviewerId], (err, rows) => {
           if (err)
               reject(err);
           else if (rows.length === 0)
               reject(404);
           else {
-              var review = createReview(rows[0]);
-              resolve(review);
+              if (rows[0].delegateId != null) {
+                var delegateId = rows[0].delegateId;
+                const sql2 = "SELECT filmId as fid, reviewerId as rid, delegateId, delegatorId, completed, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
+                db.all(sql2, [filmId, delegateId], (err, rows) => {
+                    if (err)
+                        reject(err);
+                    else if (rows.length == 0)
+                        reject(404);
+                    else {
+                        var review = createReview(rows[0]);
+                        resolve(review);
+                    }
+                });
+              }
+              else {
+                var review = createReview(rows[0]);
+                resolve(review);
+              }
           }
       });
   });
@@ -108,8 +124,8 @@ var constants = require('../utils/constants.js');
               reject("409");
           }
           else {
-              const sql2 = 'DELETE FROM reviews WHERE filmId = ? AND reviewerId = ?';
-              db.run(sql2, [filmId, reviewerId], (err) => {
+              const sql2 = 'DELETE FROM reviews WHERE filmId = ? AND (reviewerId = ? OR delegatorId = ?)';
+              db.run(sql2, [filmId, reviewerId, reviewerId], (err) => {
                   if (err)
                       reject(err);
                   else
@@ -229,6 +245,9 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
           else if(rows[0].completed != undefined && rows[0].completed == true) {
               reject(409);
           }
+          else if(rows[0].delegateId != null) {
+              reject(403);
+          }
           else {
             var sql2 = 'UPDATE reviews SET ';
             var parameters = [];
@@ -292,5 +311,5 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
 
 const createReview = function(row) {
   var completedReview = (row.completed === 1) ? true : false;
-  return new Review(row.fid, row.rid, completedReview, row.reviewDate, row.rating, row.review);
+  return new Review(row.fid, row.rid, row.delegatorId, row.delegateId, completedReview, row.reviewDate, row.rating, row.review);
 }

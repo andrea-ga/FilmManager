@@ -737,7 +737,7 @@
           "api/films/public/{filmId}/reviews/{reviewerId}"
         ],
         "summary": "Retrieve a review that has been issued/completed for a film",
-        "description": "The review of the film with ID filmID issued to the user with ID reviewerId is retrieved. This operation does not require authentication. ",
+        "description": "The review of the film with ID filmID issued to the user with ID reviewerId is retrieved or with ID delegateID in case the review has been delegated.  This operation does not require authentication. ",
         "operationId": "getSingleReview",
         "parameters": [
           {
@@ -792,7 +792,7 @@
           }
         ],
         "summary": "Update a review",
-        "description": "The review of the film with ID filmId and issued to the user with ID reviewerId is updated. This operation only allows setting the \"completed\" property to the \"true\" value, and changing the values of the \"reviewDate\", \"rating\", and \"review\" properties. This operation can be performed only by the invited reviewer.",
+        "description": "The review of the film with ID filmId and issued or delegated to the user with ID reviewerId is updated. This operation only allows setting the \"completed\" property to the \"true\" value, and changing the values of the \"reviewDate\", \"rating\", and \"review\" properties. This operation can be performed only by the invited reviewer/delegated reviewer in case it has been delegated.",
         "operationId": "updateSingleReview",
         "parameters": [
           {
@@ -808,7 +808,7 @@
           {
             "name": "reviewerId",
             "in": "path",
-            "description": "ID of the user to whom the review has been issued",
+            "description": "ID of the user to whom the review has been issued or delegated",
             "required": true,
             "schema": {
               "type": "integer",
@@ -840,7 +840,7 @@
             "content": {}
           },
           "403": {
-            "description": "Forbidden (the user is not the reviewer)",
+            "description": "Forbidden (the user is not the reviewer or the review has been delegated to another user)",
             "content": {}
           },
           "409": {
@@ -867,7 +867,7 @@
           }
         ],
         "summary": "Delete a review invitation",
-        "description": "The review of the film with ID filmId and issued to the user with ID reviewerId is deleted. This operation can only be performed by the owner, and only if the review has not yet been completed by the reviewer.",
+        "description": "The review of the film with ID filmId and issued to the user with ID reviewerId is deleted. In case the review has been delegated, also the review made by the user with ID delegateID is deleted. This operation can only be performed by the owner, and only if the review has not yet been completed by the reviewer.",
         "operationId": "deleteSingleReview",
         "parameters": [
           {
@@ -910,142 +910,6 @@
           },
           "409": {
             "description": "Conflict (the review has already been completed)",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {}
-          }
-        }
-      }
-    },
-    "/api/films/public/{filmId}/reviews/{reviewerId}/draft": {
-      "get": {
-        "tags": [
-          "api/films/public/{filmId}/reviews/{reviewerId}/draft"
-        ],
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "summary": "Retrieve a draft review that has been issued/completed for a film.",
-        "description": "The draft review of the film with ID filmID issued to the user with ID reviewerId is retrieved. This operation can only be performed by the user with ID reviewerId. ",
-        "operationId": "getSingleReviewDraft",
-        "parameters": [
-          {
-            "name": "filmId",
-            "in": "path",
-            "description": "ID of the film whose reviews must be retrieved",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "reviewerId",
-            "in": "path",
-            "description": "ID of the user to whom the review has been issued",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Draft"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {}
-          },
-          "403": {
-            "description": "Forbidden (the user is not the draft owner)",
-            "content": {}
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {}
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "api/films/public/{filmId}/reviews/{reviewerId}/draft"
-        ],
-        "security": [
-          {
-            "cookieAuth": []
-          }
-        ],
-        "summary": "Update the draft review",
-        "description": "The draft review of the film with ID filmId and issued to the user with ID reviewerId is updated. This operation only allows changing the values of the \"reviewDate\", \"rating\", and \"review\" properties. This operation can be performed only by the invited reviewer.",
-        "operationId": "updateSingleReviewDraft",
-        "parameters": [
-          {
-            "name": "filmId",
-            "in": "path",
-            "description": "ID of the film whose review must be completed",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "reviewerId",
-            "in": "path",
-            "description": "ID of the user to whom the review has been issued",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "The updated Review object",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Draft"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "No Content",
-            "content": {}
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {}
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {}
-          },
-          "403": {
-            "description": "Forbidden (the user is not the reviewer)",
-            "content": {}
-          },
-          "404": {
-            "description": "Not Found",
             "content": {}
           },
           "500": {

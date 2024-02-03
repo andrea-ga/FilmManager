@@ -16,7 +16,6 @@ var filmManager = require(path.join(__dirname, 'components/FilmManager'));
 var userController = require(path.join(__dirname, 'controllers/UsersController'));
 var filmController = require(path.join(__dirname, 'controllers/FilmsController'));
 var reviewController = require(path.join(__dirname, 'controllers/ReviewsController'));
-var draftController = require(path.join(__dirname, 'controllers/DraftsController'));
 var utils = require(path.join(__dirname, 'utils/writer.js'));
 
 /** Set up and enable Cross-Origin Resource Sharing (CORS) **/
@@ -53,7 +52,6 @@ if(req.isAuthenticated()) {
 var filmSchema = JSON.parse(fs.readFileSync(path.join('.', 'json_schemas', 'film_schema.json')).toString());
 var userSchema = JSON.parse(fs.readFileSync(path.join('.', 'json_schemas', 'user_schema.json')).toString());
 var reviewSchema = JSON.parse(fs.readFileSync(path.join('.', 'json_schemas', 'review_schema.json')).toString());
-var draftSchema = JSON.parse(fs.readFileSync(path.join('.', 'json_schemas', 'draft_schema.json')).toString());
 var validator = new Validator({ allErrors: true });
 validator.ajv.addSchema([userSchema, filmSchema, reviewSchema]);
 const addFormats = require('ajv-formats').default;
@@ -99,10 +97,6 @@ app.get('/api/films/public/:filmId/reviews', reviewController.getFilmReviews);
 app.post('/api/films/public/:filmId/reviews', isLoggedIn, reviewController.issueFilmReview);
 app.get('/api/films/public/:filmId/reviews/:reviewerId', reviewController.getSingleReview);
 app.put('/api/films/public/:filmId/reviews/:reviewerId', isLoggedIn, reviewController.updateSingleReview);
-
-app.get('/api/films/public/:filmId/reviews/:reviewerId/draft', isLoggedIn, draftController.getSingleReviewDraft);
-app.put('/api/films/public/:filmId/reviews/:reviewerId/draft', isLoggedIn, draftController.updateSingleReviewDraft);
-
 app.delete('/api/films/public/:filmId/reviews/:reviewerId', isLoggedIn, reviewController.deleteSingleReview);
 app.get('/api/users', isLoggedIn, userController.getUsers);
 app.post('/api/users/authenticator', userController.authenticateUser);

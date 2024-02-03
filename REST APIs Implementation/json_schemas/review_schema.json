@@ -8,20 +8,27 @@
   "properties": {
     "$schema": {
       "type": "string",
-      "description": "path to the JSON Schema to use for the validation of the JSON file describing the film"
+      "description": "path to the JSON Schema to use for the validation of the data structure"
     },
     "filmId": {
       "type": "integer",
-      "description": "unique identifier of the film for which a review invitation has been issued"
+      "description": "unique identifier of the film for which this review invitation has been issued"
     },
     "reviewerId": {
       "type": "integer",
-      "description": "unique identifier of the the user who has received the review invitation"
+      "description": "unique identifier of the the user who has received this review invitation"
+    },
+    "delegatorId": {
+      "type": "integer",
+      "description": "unique identifier of the the user who delegated this review invitation to this reviewer"
+    },
+    "delegateId": {
+      "type": "integer",
+      "description": "unique identifier of the the user who has been delegated by this reviewer for this review invitation"
     },
     "completed": {
       "type": "boolean",
-      "description": "this property is set to true if the review has been completed, false otherwise",
-      "default": "false"
+      "description": "true if the review has been completed, false otherwise"
     },  
     "reviewDate": {
       "type": "string",
@@ -67,9 +74,6 @@
           ]
         }
       ]
-    },
-    "reviewDate": ["completed"],
-    "rating": ["completed"],
-    "review": ["completed"]
+    }
   }
 }

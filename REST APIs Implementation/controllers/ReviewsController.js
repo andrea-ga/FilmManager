@@ -134,7 +134,7 @@ module.exports.updateSingleReview = function updateSingleReview (req, res, next)
     })
     .catch(function(response) {
         if(response == 403){
-            utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The user is not a reviewer of the film' }], }, 403);
+            utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The user is not a reviewer of the film or the review has been delegated to another user.' }], }, 403);
         }
         else if(response == 409){
           utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been already completed, so the review cannot be updated anymore.' }], }, 409);
