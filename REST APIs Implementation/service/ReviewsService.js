@@ -220,7 +220,7 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
 }
 
 /**
- * Complete and update a review
+ * Update a review
  *
  * Input:
  * - review: review object (with only the needed properties)
@@ -245,7 +245,7 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
           else if(rows[0].completed != undefined && rows[0].completed == true) {
               reject(409);
           }
-          else if(rows[0].delegateId != null) {
+          else if(rows[0].delegateId != undefined) {
               reject(403);
           }
           else {
@@ -290,6 +290,141 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
       });
   });
 }
+
+
+/**
+ * Delegate a review
+ *
+ * Input:
+ * - review: review object (with only the needed properties)
+ * - filmID: the ID of the film to be reviewed
+ * - reviewerId: the ID of the reviewer
+ * - delegateId: the ID of the delegate
+ * Output:
+ * - no response expected for this operation
+ * 
+ **/
+exports.delegateReview = function(review, filmId, reviewerId) {
+    return new Promise((resolve, reject) => {
+  
+        const sql1 = "SELECT * FROM reviews WHERE filmId = ? AND reviewerId = ?";
+        db.all(sql1, [filmId, reviewerId], (err, rows) => {
+            if (err)
+                reject(err);
+            else if (rows.length === 0)
+                reject(404);
+            else if(reviewerId != rows[0].reviewerId) {
+                reject(403);
+            }
+            else if(rows[0].completed != undefined && rows[0].completed == true) {
+                reject(409);
+            }
+            else if(rows[0].delegateId != undefined || rows[0].delegatorId != undefined) {
+                reject(403);
+            }
+            else {
+              if (review.delegateId != undefined) {
+                var sql2 = 'UPDATE reviews SET delegateId = ? WHERE filmId = ? AND reviewerId = ?';
+
+                db.run(sql2, [review.delegateId, filmId, reviewerId], function(err) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        var sql3 = 'SELECT * FROM reviews WHERE filmId = ? AND reviewerId = ?';
+                        
+                        db.all(sql3, [filmId, review.delegateId], (err, rows) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                if (rows.length === 0) {
+                                    var sql4 = 'INSERT INTO reviews(filmId, reviewerId, delegatorId, completed) VALUES(?,?,?,0)'
+
+                                    db.run(sql4, [filmId, review.delegateId, reviewerId], function(err) {
+                                        if (err) {
+                                            reject(err);
+                                        } else {
+                                            resolve(null);
+                                        }
+                                    });
+                                }
+                                else {
+                                    var sql4 = 'UPDATE reviews SET delegatorId = ? WHERE filmId = ? AND reviewerId = ?'
+
+                                    db.run(sql4, [reviewerId, review.delegateId], function(err) {
+                                        if (err) {
+                                            reject(err);
+                                        } else {
+                                            resolve(null);
+                                        }
+                                    });
+                                }
+
+                                resolve(null);
+                            }
+                        });
+
+                        resolve(null);
+                }
+                });
+                }
+        }
+        });
+    });
+  }
+
+
+/**
+ * Delete a delegation
+ *
+ * Input: 
+ * - filmId: ID of the film
+ * - reviewerId: ID of the reviewer
+ * - delegateId : ID of user who wants to remove the review
+ * Output:
+ * - no response expected for this operation
+ * 
+ **/
+exports.deleteDelegation = function(filmId, reviewerId, invitedUser) {
+    return new Promise((resolve, reject) => {
+        const sql1 = "SELECT completed, delegateId FROM reviews WHERE filmId = ? AND reviewerId = ? AND delegatorId IS NULL";
+        
+        db.all(sql1, [filmId, reviewerId], (err, rows) => {
+            if (err)
+                reject(err);
+            else if (rows.length === 0)
+                reject(404);
+            else if(reviewerId != invitedUser) {
+                reject("403");
+            }
+            else if(rows[0].completed == 1) {
+                reject("409");
+            }
+            else {
+                const sql2 = 'DELETE FROM reviews WHERE filmId = ? AND reviewerId = ?';
+                
+                db.run(sql2, [filmId, rows[0].delegateId], (err) => {
+                    if (err)
+                        reject(err);
+                    else {
+                        const sql3 = 'UPDATE reviews SET delegateId = NULL WHERE filmId = ? AND reviewerId = ?';
+                        
+                        db.run(sql3, [filmId, reviewerId], (err) => {
+                            if (err)
+                                reject(err);
+                            else {
+                                resolve(null);
+                            }
+                        });
+
+                        resolve(null);
+                    }
+                });
+            }
+        });
+    });
+  
+  }
+
 
 /**
  * Utility functions

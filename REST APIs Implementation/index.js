@@ -98,6 +98,8 @@ app.post('/api/films/public/:filmId/reviews', isLoggedIn, reviewController.issue
 app.get('/api/films/public/:filmId/reviews/:reviewerId', reviewController.getSingleReview);
 app.put('/api/films/public/:filmId/reviews/:reviewerId', isLoggedIn, reviewController.updateSingleReview);
 app.delete('/api/films/public/:filmId/reviews/:reviewerId', isLoggedIn, reviewController.deleteSingleReview);
+app.put('/api/films/public/:filmId/reviews/:reviewerId/delegate', isLoggedIn, reviewController.delegateReview);
+app.delete('/api/films/public/:filmId/reviews/:reviewerId/delegate', isLoggedIn, reviewController.deleteDelegation);
 app.get('/api/users', isLoggedIn, userController.getUsers);
 app.post('/api/users/authenticator', userController.authenticateUser);
 app.get('/api/users/:userId', isLoggedIn, userController.getSingleUser);

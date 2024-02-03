@@ -660,6 +660,110 @@ paths:
         '500':
           description: Internal Server Error
           content: {}
+  /api/films/public/{filmId}/reviews/{reviewerId}/delegate:
+    put:
+      tags:
+        - api/films/public/{filmId}/reviews/{reviewerId}/delegate
+      security:
+        - cookieAuth: []
+      summary: Delegate a review
+      description: >-
+        The review of the film with ID filmId and issued to the user with ID
+        reviewerId is delegated to another user. This operation only allows
+        changing the values of the "delegateID" property of the invited user and
+        the "delegatorId" property of the delegated user. This operation can be
+        performed only by the invited reviewer.
+      operationId: delegateReview
+      parameters:
+        - name: filmId
+          in: path
+          description: ID of the film whose review must be completed
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: reviewerId
+          in: path
+          description: ID of the user to whom the review has been issued
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: The updated Review object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '400':
+          description: Bad Request
+          content: {}
+        '401':
+          description: Unauthorized
+          content: {}
+        '403':
+          description: Forbidden (the user is not the reviewer)
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '409':
+          description: Conflict (the review has already been completed)
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
+    delete:
+      tags:
+        - api/films/public/{filmId}/reviews/{reviewerId}/delegate
+      security:
+        - cookieAuth: []
+      summary: Delete a review delegation
+      description: >-
+        The review of the film with ID filmId and issued to the user with ID
+        reviewerId and delegated to another user is deleted. The review returns
+        to the state it had before it was delegated. This operation can only be
+        performed by the invited user, and only if the review has not yet been
+        completed by the delegated user.
+      operationId: deleteDelegation
+      parameters:
+        - name: filmId
+          in: path
+          description: ID of the film whose review invitation must be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: reviewerId
+          in: path
+          description: ID of the user to whom the review has been issued
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Successful operation - No Content
+          content: {}
+        '401':
+          description: Unauthorized
+          content: {}
+        '403':
+          description: Forbidden (the user is not the invited user)
+          content: {}
+        '404':
+          description: Not Found
+          content: {}
+        '409':
+          description: Conflict (the review has already been completed)
+          content: {}
+        '500':
+          description: Internal Server Error
+          content: {}
   /api/films/public/assignments:
     post:
       tags:
