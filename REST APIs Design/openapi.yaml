@@ -608,7 +608,9 @@ paths:
           description: Not Found
           content: {}
         '409':
-          description: Conflict (the review has already been completed)
+          description: >-
+            Conflict (the review has already been completed or the review miss
+            some fields to be checked completed)
           content: {}
         '500':
           description: Internal Server Error
@@ -712,7 +714,9 @@ paths:
           description: Not Found
           content: {}
         '409':
-          description: Conflict (the review has already been completed)
+          description: >-
+            Conflict (the review has already been completed or the delegated
+            user has been already issued/delegated for this film review)
           content: {}
         '500':
           description: Internal Server Error

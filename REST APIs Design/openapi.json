@@ -844,7 +844,7 @@
             "content": {}
           },
           "409": {
-            "description": "Conflict (the review has already been completed)",
+            "description": "Conflict (the review has already been completed or the review miss some fields to be checked completed)",
             "content": {}
           },
           "404": {
@@ -982,7 +982,7 @@
             "content": {}
           },
           "409": {
-            "description": "Conflict (the review has already been completed)",
+            "description": "Conflict (the review has already been completed or the delegated user has been already issued/delegated for this film review)",
             "content": {}
           },
           "404": {

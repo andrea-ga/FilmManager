@@ -252,6 +252,12 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
             var sql2 = 'UPDATE reviews SET ';
             var parameters = [];
             if(review.completed != undefined){
+                if (review.completed === 1 && ((review.reviewDate == undefined && rows[0].reviewDate == undefined) ||
+                                               (review.rating == undefined && rows[0].rating == undefined) ||
+                                               (review.review == undefined && rows[0].review == undefined))) {
+                    reject(409);
+                }
+
                 if (parameters.length != 0)
                       sql2 = sql2.concat(', ');  
                 sql2 = sql2.concat('completed = ?');
@@ -308,6 +314,9 @@ exports.delegateReview = function(review, filmId, reviewerId) {
     return new Promise((resolve, reject) => {
   
         const sql1 = "SELECT * FROM reviews WHERE filmId = ? AND reviewerId = ?";
+        var r_date = null;
+        var ra = null;
+        var re = null;
         db.all(sql1, [filmId, reviewerId], (err, rows) => {
             if (err)
                 reject(err);
@@ -323,50 +332,44 @@ exports.delegateReview = function(review, filmId, reviewerId) {
                 reject(403);
             }
             else {
+              r_date = rows[0].reviewDate;
+              ra = rows[0].rating;
+              re = rows[0].review;
+            
               if (review.delegateId != undefined) {
-                var sql2 = 'UPDATE reviews SET delegateId = ? WHERE filmId = ? AND reviewerId = ?';
+                    var sql2 = 'SELECT * FROM reviews WHERE filmId = ? AND reviewerId = ?';
+                    
+                    db.all(sql2, [filmId, review.delegateId], (err, rows) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else if(rows.length !== 0) {
+                            reject(409);
+                        } else {
+                            var sql3 = 'UPDATE reviews SET delegateId = ? WHERE filmId = ? AND reviewerId = ?';
 
-                db.run(sql2, [review.delegateId, filmId, reviewerId], function(err) {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        var sql3 = 'SELECT * FROM reviews WHERE filmId = ? AND reviewerId = ?';
-                        
-                        db.all(sql3, [filmId, review.delegateId], (err, rows) => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                if (rows.length === 0) {
-                                    var sql4 = 'INSERT INTO reviews(filmId, reviewerId, delegatorId, completed) VALUES(?,?,?,0)'
-
-                                    db.run(sql4, [filmId, review.delegateId, reviewerId], function(err) {
+                            db.run(sql3, [review.delegateId, filmId, reviewerId], function(err) {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    var sql4 = 'INSERT INTO reviews(filmId, reviewerId, delegatorId, completed, reviewDate, rating, review) VALUES(?,?,?,0,?,?,?)'
+    
+                                    db.run(sql4, [filmId, review.delegateId, reviewerId, r_date, ra, re], function(err) {
                                         if (err) {
                                             reject(err);
                                         } else {
                                             resolve(null);
                                         }
                                     });
+
+                                    resolve(null);
                                 }
-                                else {
-                                    var sql4 = 'UPDATE reviews SET delegatorId = ? WHERE filmId = ? AND reviewerId = ?'
+                            });
 
-                                    db.run(sql4, [reviewerId, review.delegateId], function(err) {
-                                        if (err) {
-                                            reject(err);
-                                        } else {
-                                            resolve(null);
-                                        }
-                                    });
-                                }
-
-                                resolve(null);
-                            }
-                        });
-
-                        resolve(null);
-                }
-                });
-                }
+                            resolve(null);
+                        }
+                    });
+            }
         }
         });
     });
