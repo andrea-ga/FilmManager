@@ -356,6 +356,16 @@ exports.delegateReview = function(review, filmId, reviewerId) {
     
                                     db.run(sql4, [filmId, review.delegateId, reviewerId, r_date, ra, re], function(err) {
                                         if (err) {
+                                            var sql5 = 'UPDATE reviews SET delegateId = NULL WHERE filmId = ? AND reviewerId = ?';
+
+                                            db.run(sql5, [filmId, reviewerId], function(err) {
+                                                if(err) {
+                                                    reject(err);
+                                                } else {
+                                                    resolve(null);
+                                                }
+                                            });
+
                                             reject(err);
                                         } else {
                                             var review = createReview(filmId, review.delegateId, false, reviewerId, reviewDate=r_date, rating=ra, review=re);
