@@ -158,7 +158,7 @@ module.exports.delegateReview = function delegateReview (req, res, next) {
   else {
     Reviews.delegateReview(req.body, req.params.filmId, req.params.reviewerId)
     .then(function(response) {
-        utils.writeJson(res, response, 204);
+        utils.writeJson(res, response, 201);
     })
     .catch(function(response) {
         if(response == 403){

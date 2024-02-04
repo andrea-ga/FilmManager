@@ -698,9 +698,14 @@ paths:
             schema:
               $ref: '#/components/schemas/Review'
       responses:
-        '204':
-          description: No Content
-          content: {}
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
         '400':
           description: Bad Request
           content: {}
