@@ -165,7 +165,7 @@ module.exports.delegateReview = function delegateReview (req, res, next) {
             utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The user is not a reviewer of the film or the review has already been delegated to another user.' }], }, 403);
         }
         else if(response == 409){
-          utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been already completed or the delegated user has been already issued/delegated for this film review.' }], }, 409);
+          utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been already completed or the user has been already issued/delegated to review this film.' }], }, 409);
         }
         else if (response == 404){
             utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review does not exist.' }], }, 404);

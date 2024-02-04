@@ -671,9 +671,9 @@ paths:
       summary: Delegate a review
       description: >-
         The review of the film with ID filmId and issued to the user with ID
-        reviewerId is delegated to another user. This operation only allows
-        changing the values of the "delegateID" property of the invited user and
-        the "delegatorId" property of the delegated user. This operation can be
+        reviewerId is delegated to another user. This operation changes the
+        values of the "delegateID" property of the invited user and the
+        "delegatorId" property of the delegated user. This operation can be
         performed only by the invited reviewer.
       operationId: delegateReview
       parameters:
