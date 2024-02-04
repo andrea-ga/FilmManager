@@ -663,7 +663,7 @@ paths:
           description: Internal Server Error
           content: {}
   /api/films/public/{filmId}/reviews/{reviewerId}/delegate:
-    put:
+    post:
       tags:
         - api/films/public/{filmId}/reviews/{reviewerId}/delegate
       security:

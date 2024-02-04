@@ -17,7 +17,7 @@ var constants = require('../utils/constants.js');
  **/
  exports.getFilmReviews = function(req) {
   return new Promise((resolve, reject) => {
-      var sql = "SELECT r.filmId as fid, r.reviewerId as rid, delegatorId, delegateId, completed, reviewDate, rating, review, c.total_rows FROM reviews r, (SELECT count(*) total_rows FROM reviews l WHERE l.filmId = ? AND l.delegateID IS NULL) c WHERE  r.filmId = ? AND r.delegateID IS NULL";
+      var sql = "SELECT r.filmId as fid, r.reviewerId as rid, completed, delegatorId, delegateId, reviewDate, rating, review, c.total_rows FROM reviews r, (SELECT count(*) total_rows FROM reviews l WHERE l.filmId = ? AND l.delegateID IS NULL) c WHERE  r.filmId = ? AND r.delegateID IS NULL";
       var params = getPagination(req);
       if (params.length != 2) sql = sql + " LIMIT ?,?";
       db.all(sql, params, (err, rows) => {
@@ -67,7 +67,7 @@ var constants = require('../utils/constants.js');
  **/
  exports.getSingleReview = function(filmId, reviewerId) {
   return new Promise((resolve, reject) => {
-      const sql = "SELECT filmId as fid, reviewerId as rid, delegateId, delegatorId, completed, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
+      const sql = "SELECT filmId as fid, reviewerId as rid, completed, delegateId, delegatorId, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
       db.all(sql, [filmId, reviewerId], (err, rows) => {
           if (err)
               reject(err);
@@ -76,7 +76,7 @@ var constants = require('../utils/constants.js');
           else {
               if (rows[0].delegateId != null) {
                 var delegateId = rows[0].delegateId;
-                const sql2 = "SELECT filmId as fid, reviewerId as rid, delegateId, delegatorId, completed, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
+                const sql2 = "SELECT filmId as fid, reviewerId as rid, completed, delegateId, delegatorId, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
                 db.all(sql2, [filmId, delegateId], (err, rows) => {
                     if (err)
                         reject(err);
@@ -352,13 +352,14 @@ exports.delegateReview = function(review, filmId, reviewerId) {
                                 if (err) {
                                     reject(err);
                                 } else {
-                                    var sql4 = 'INSERT INTO reviews(filmId, reviewerId, delegatorId, completed, reviewDate, rating, review) VALUES(?,?,?,0,?,?,?)'
+                                    var sql4 = 'INSERT INTO reviews(filmId, reviewerId, completed, delegatorId, reviewDate, rating, review) VALUES(?,?,0,?,?,?,?)'
     
                                     db.run(sql4, [filmId, review.delegateId, reviewerId, r_date, ra, re], function(err) {
                                         if (err) {
                                             reject(err);
                                         } else {
-                                            resolve(null);
+                                            var review = createReview(filmId, review.delegateId, false, reviewerId, reviewDate=r_date, rating=ra, review=re);
+                                            resolve(review);
                                         }
                                     });
 
@@ -449,5 +450,5 @@ exports.deleteDelegation = function(filmId, reviewerId, invitedUser) {
 
 const createReview = function(row) {
   var completedReview = (row.completed === 1) ? true : false;
-  return new Review(row.fid, row.rid, row.delegatorId, row.delegateId, completedReview, row.reviewDate, row.rating, row.review);
+  return new Review(row.fid, row.rid, completedReview, row.delegatorId, row.delegateId, row.reviewDate, row.rating, row.review);
 }

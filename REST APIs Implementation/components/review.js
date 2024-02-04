@@ -1,5 +1,5 @@
 class Review{    
-    constructor(filmId, reviewerId, delegatorId, delegateId, completed, reviewDate, rating, review) {
+    constructor(filmId, reviewerId, completed, delegatorId, delegateId, reviewDate, rating, review) {
         this.filmId = filmId;
         this.reviewerId = reviewerId;
         this.completed = completed;
