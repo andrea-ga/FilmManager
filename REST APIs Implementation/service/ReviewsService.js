@@ -322,9 +322,6 @@ exports.delegateReview = function(review, filmId, reviewerId) {
                 reject(err);
             else if (rows.length === 0)
                 reject(404);
-            else if(reviewerId != rows[0].reviewerId) {
-                reject(403);
-            }
             else if(rows[0].completed != undefined && rows[0].completed == true) {
                 reject(409);
             }
@@ -343,7 +340,7 @@ exports.delegateReview = function(review, filmId, reviewerId) {
                         if (err) {
                             reject(err);
                         }
-                        else if(rows.length !== 0) {
+                        else if(rows.length != 0) {
                             reject(409);
                         } else {
                             var sql3 = 'UPDATE reviews SET delegateId = ? WHERE filmId = ? AND reviewerId = ?';
