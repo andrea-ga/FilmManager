@@ -75,18 +75,7 @@ var constants = require('../utils/constants.js');
               reject(404);
           else {
               if (rows[0].delegateId != null) {
-                var delegateId = rows[0].delegateId;
-                const sql2 = "SELECT filmId as fid, reviewerId as rid, completed, delegateId, delegatorId, reviewDate, rating, review FROM reviews WHERE filmId = ? AND reviewerId = ?";
-                db.all(sql2, [filmId, delegateId], (err, rows) => {
-                    if (err)
-                        reject(err);
-                    else if (rows.length == 0)
-                        reject(404);
-                    else {
-                        var review = createReview(rows[0]);
-                        resolve(review);
-                    }
-                });
+                reject(409);
               }
               else {
                 var review = createReview(rows[0]);
@@ -239,14 +228,11 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
               reject(err);
           else if (rows.length === 0)
               reject(404);
-          else if(reviewerId != rows[0].reviewerId) {
-              reject(403);
-          }
           else if(rows[0].completed != undefined && rows[0].completed == true) {
               reject(409);
           }
           else if(rows[0].delegateId != undefined) {
-              reject(403);
+              reject(409);
           }
           else {
             var sql2 = 'UPDATE reviews SET ';
@@ -326,7 +312,7 @@ exports.delegateReview = function(review, filmId, reviewerId) {
                 reject(409);
             }
             else if(rows[0].delegateId != undefined || rows[0].delegatorId != undefined) {
-                reject(403);
+                reject(409);
             }
             else {
               r_date = rows[0].reviewDate;
@@ -343,45 +329,24 @@ exports.delegateReview = function(review, filmId, reviewerId) {
                         else if(rows.length != 0) {
                             reject(409);
                         } else {
-                            var sql3 = 'UPDATE reviews SET delegateId = ? WHERE filmId = ? AND reviewerId = ?';
-
-                            db.run(sql3, [review.delegateId, filmId, reviewerId], function(err) {
+                            var sql3 = 'INSERT INTO reviews(filmId, reviewerId, completed, delegatorId, reviewDate, rating, review) VALUES(?,?,0,?,?,?,?)'
+                            
+                            db.run(sql3, [filmId, review.delegateId, reviewerId, r_date, ra, re], function(err) {
                                 if (err) {
                                     reject(err);
                                 } else {
-                                    var sql4 = 'INSERT INTO reviews(filmId, reviewerId, completed, delegatorId, reviewDate, rating, review) VALUES(?,?,0,?,?,?,?)'
-    
-                                    db.run(sql4, [filmId, review.delegateId, reviewerId, r_date, ra, re], function(err) {
-                                        if (err) {
-                                            var sql5 = 'UPDATE reviews SET delegateId = NULL WHERE filmId = ? AND reviewerId = ?';
-
-                                            db.run(sql5, [filmId, reviewerId], function(err) {
-                                                if(err) {
-                                                    reject(err);
-                                                } else {
-                                                    resolve(null);
-                                                }
-                                            });
-
-                                            reject(err);
-                                        } else {
-                                            var review = createReview(filmId, review.delegateId, false, reviewerId, reviewDate=r_date, rating=ra, review=re);
-                                            resolve(review);
-                                        }
-                                    });
-
-                                    resolve(null);
+                                    var row = {fid: filmId, rid: review.delegateId, completed: false, delegatorId: reviewerId, reviewDate: r_date, rating: ra, review: re};
+                                    var rev = createReview(row);
+                                    resolve(rev);
                                 }
                             });
-
-                            resolve(null);
                         }
                     });
+                }
             }
-        }
         });
     });
-  }
+}
 
 
 /**
@@ -397,7 +362,7 @@ exports.delegateReview = function(review, filmId, reviewerId) {
  **/
 exports.deleteDelegation = function(filmId, reviewerId, invitedUser) {
     return new Promise((resolve, reject) => {
-        const sql1 = "SELECT completed, delegateId FROM reviews WHERE filmId = ? AND reviewerId = ? AND delegatorId IS NULL";
+        const sql1 = "SELECT completed, reviewerId FROM reviews WHERE filmId = ? AND delegatorId = ?";
         
         db.all(sql1, [filmId, reviewerId], (err, rows) => {
             if (err)
@@ -407,26 +372,16 @@ exports.deleteDelegation = function(filmId, reviewerId, invitedUser) {
             else if(reviewerId != invitedUser) {
                 reject("403");
             }
-            else if(rows[0].completed == 1) {
+            else if(rows[0].completed === 1) {
                 reject("409");
             }
             else {
                 const sql2 = 'DELETE FROM reviews WHERE filmId = ? AND reviewerId = ?';
                 
-                db.run(sql2, [filmId, rows[0].delegateId], (err) => {
+                db.run(sql2, [filmId, rows[0].reviewerId], (err) => {
                     if (err)
                         reject(err);
                     else {
-                        const sql3 = 'UPDATE reviews SET delegateId = NULL WHERE filmId = ? AND reviewerId = ?';
-                        
-                        db.run(sql3, [filmId, reviewerId], (err) => {
-                            if (err)
-                                reject(err);
-                            else {
-                                resolve(null);
-                            }
-                        });
-
                         resolve(null);
                     }
                 });

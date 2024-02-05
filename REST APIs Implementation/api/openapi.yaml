@@ -551,6 +551,9 @@ paths:
         '404':
           description: Not Found
           content: {}
+        '409':
+          description: The review has been delegated to another user
+          content: {}
         '500':
           description: Internal Server Error
           content: {}
@@ -563,10 +566,10 @@ paths:
       description: >-
         The review of the film with ID filmId and issued or delegated to the
         user with ID reviewerId is updated. This operation only allows setting
-        the "completed" property to the "true" value, and changing the values of
-        the "reviewDate", "rating", and "review" properties. This operation can
-        be performed only by the invited reviewer/delegated reviewer in case it
-        has been delegated.
+        the "completed" property to the "true" value (if all the other values
+        are setted), and changing the values of the "reviewDate", "rating", and
+        "review" properties. This operation can be performed only by the invited
+        reviewer/delegated reviewer in case it has been delegated.
       operationId: updateSingleReview
       parameters:
         - name: filmId
@@ -599,18 +602,13 @@ paths:
         '401':
           description: Unauthorized
           content: {}
-        '403':
-          description: >-
-            Forbidden (the user is not the reviewer or the review has been
-            delegated to another user)
-          content: {}
         '404':
           description: Not Found
           content: {}
         '409':
           description: >-
-            Conflict (the review has already been completed or the review miss
-            some fields to be checked completed)
+            Conflict (the review has already been completed OR delegated OR the
+            review miss some fields to be checked completed)
           content: {}
         '500':
           description: Internal Server Error
@@ -712,16 +710,14 @@ paths:
         '401':
           description: Unauthorized
           content: {}
-        '403':
-          description: Forbidden (the user is not the reviewer)
-          content: {}
         '404':
           description: Not Found
           content: {}
         '409':
           description: >-
-            Conflict (the review has already been completed or the delegated
-            user has been already issued/delegated for this film review)
+            Conflict (the review has already been completed OR delegated OR the
+            user with ID delegateId has been already issued or delegated to
+            review this film)
           content: {}
         '500':
           description: Internal Server Error
@@ -762,7 +758,7 @@ paths:
           description: Unauthorized
           content: {}
         '403':
-          description: Forbidden (the user is not the invited user)
+          description: Forbidden (the user is not the delegator of the review)
           content: {}
         '404':
           description: Not Found
