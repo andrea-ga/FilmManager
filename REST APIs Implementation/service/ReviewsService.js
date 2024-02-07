@@ -1,7 +1,6 @@
 'use strict';
 
 const Review = require('../components/review');
-const User = require('../components/user');
 const db = require('../components/db');
 var constants = require('../utils/constants.js');
 
@@ -210,6 +209,7 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
  * - review: review object (with only the needed properties)
  * - filmID: the ID of the film to be reviewed
  * - reviewerId: the ID of the reviewer
+ * - logUser: ID of the user who wants to update the review
  * Output:
  * - no response expected for this operation
  * 
@@ -287,9 +287,8 @@ const issueSingleReview = function(sql3, filmId, reviewerId){
  * - review: review object (with only the needed properties)
  * - filmID: the ID of the film to be reviewed
  * - reviewerId: the ID of the reviewer
- * - delegateId: the ID of the delegate
  * Output:
- * - no response expected for this operation
+ * - the delegated review
  * 
  **/
 exports.delegateReview = function(review, filmId, reviewerId) {
@@ -340,7 +339,7 @@ exports.delegateReview = function(review, filmId, reviewerId) {
  * Input: 
  * - filmId: ID of the film
  * - reviewerId: ID of the reviewer
- * - delegateId : ID of user who wants to remove the review
+ * - logUser : ID of user who wants to remove the review
  * Output:
  * - no response expected for this operation
  * 
