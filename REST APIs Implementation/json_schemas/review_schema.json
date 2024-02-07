@@ -18,13 +18,13 @@
       "type": "integer",
       "description": "unique identifier of the the user who has received this review invitation"
     },
-    "delegatorId": {
-      "type": "integer",
-      "description": "unique identifier of the the user who delegated this review invitation to this reviewer"
-    },
     "delegateId": {
       "type": "integer",
       "description": "unique identifier of the the user who has been delegated by this reviewer for this review invitation"
+    },
+    "delegated": {
+      "type": "boolean",
+      "description": "true if the review has been delegated, false otherwise"
     },
     "completed": {
       "type": "boolean",
@@ -47,7 +47,7 @@
       "maxLength": 1000
     }
   },
-  "required": ["filmId", "reviewerId", "completed"],
+  "required": ["filmId", "reviewerId", "delegateId", "delegated", "completed"],
   "dependencies": {
     "completed": {
       "oneOf": [

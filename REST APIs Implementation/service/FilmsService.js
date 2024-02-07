@@ -80,7 +80,7 @@ var constants = require('../utils/constants.js');
                 reject(err);
             else if (rows.length === 0)
                 reject(404);
-            else if (rows[0].private == 0)
+            else if (rows[0].private == 0 || rows[0].private != film.private)
                 reject(409)
             else if(owner != rows[0].owner) {
                 reject(403);
@@ -201,7 +201,7 @@ var constants = require('../utils/constants.js');
                 reject(err);
             else if (rows.length === 0)
                 reject(404);
-            else if (rows[0].private == 1)
+            else if (rows[0].private == 1 || rows[0].private != film.private)
                 reject(409);
             else if(owner != rows[0].owner) {
                 reject(403);

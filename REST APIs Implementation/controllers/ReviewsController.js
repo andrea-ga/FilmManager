@@ -60,9 +60,6 @@ module.exports.getSingleReview = function getSingleReview (req, res, next) {
             if (response == 404){
                 utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review does not exist.' }], }, 404);
             }
-            else if (response == 409){
-              utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been delegated to another user.' }], }, 409);
-            }
             else {
                 utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': response }], }, 500);
             }
@@ -126,27 +123,24 @@ module.exports.issueFilmReview = function issueFilmReview (req, res, next) {
 
 module.exports.updateSingleReview = function updateSingleReview (req, res, next) {
   
-  if(req.params.reviewerId != req.user.id)
-  {
-    utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The reviewerId is not equal the id of the requesting user.' }], }, 400);
-  }
-  else {
-    Reviews.updateSingleReview(req.body, req.params.filmId, req.params.reviewerId)
-    .then(function(response) {
-        utils.writeJson(res, response, 204);
-    })
-    .catch(function(response) {
-        if(response == 409){
-          utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been already completed OR delegated OR the review miss some fields to be checked completed.' }], }, 409);
-        }
-        else if (response == 404){
-            utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review does not exist.' }], }, 404);
-        }
-        else {
-            utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': response }], }, 500);
-        }
-    });
-  }
+  Reviews.updateSingleReview(req.body, req.params.filmId, req.params.reviewerId, req.user.id)
+  .then(function(response) {
+      utils.writeJson(res, response, 204);
+  })
+  .catch(function(response) {
+      if(response == 409){
+        utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been already completed OR the review miss some fields to be checked completed.' }], }, 409);
+      } 
+      else if (response == 403){
+        utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The reviewerId of the delegated user is not equal the id of the requesting user.' }], }, 404);
+      }
+      else if (response == 404){
+          utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review does not exist.' }], }, 404);
+      }
+      else {
+          utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': response }], }, 500);
+      }
+  });
 };
 
 module.exports.delegateReview = function delegateReview (req, res, next) {
@@ -162,7 +156,7 @@ module.exports.delegateReview = function delegateReview (req, res, next) {
     })
     .catch(function(response) {
         if(response == 409){
-          utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been already completed OR delegated OR the user with ID delegateId has been already issued or delegated to review this film.' }], }, 409);
+          utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review has been already completed OR delegated.' }], }, 409);
         }
         else if (response == 404){
             utils.writeJson(res, { errors: [{ 'param': 'Server', 'msg': 'The review does not exist.' }], }, 404);

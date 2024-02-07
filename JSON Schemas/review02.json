@@ -3,8 +3,9 @@
     "filmId": 2,
     "reviewerId": 1,
     "delegateId": 3,
+    "delegated": true,
     "completed": true,
     "reviewDate": "2022-02-22",
     "rating": 9,
-    "review": "Molto interessante."
+    "review": "Very interesting."
   }

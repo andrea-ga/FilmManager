@@ -776,10 +776,6 @@
             "description": "Not Found",
             "content": {}
           },
-          "409": {
-            "description": "The review has been delegated to another user",
-            "content": {}
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {}
@@ -987,7 +983,7 @@
             "content": {}
           },
           "409": {
-            "description": "Conflict (the review has already been completed OR delegated OR the user with ID delegateId has been already issued or delegated to review this film)",
+            "description": "Conflict (the review has already been completed OR delegated)",
             "content": {}
           },
           "404": {
