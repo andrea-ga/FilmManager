@@ -314,16 +314,25 @@ exports.delegateReview = function(review, filmId, reviewerId) {
               re = rows[0].review;
             
               if (review.delegateId != undefined) {
-                    var sql2 = 'INSERT INTO reviews(filmId, reviewerId, delegateId, delegated, completed, reviewDate, rating, review) VALUES(?,?,?,1,0,?,?,?)';
+                    const sql2 = 'INSERT INTO reviews(filmId, reviewerId, delegateId, delegated, completed, reviewDate, rating, review) VALUES(?,?,?,1,0,?,?,?)';
                     
                     db.run(sql2, [filmId, reviewerId, review.delegateId, r_date, ra, re], function(err) {
                         if (err) {
                             reject(err);
                         }
                         else {
-                            var row = {fid: filmId, rid: reviewerId, delegateId: review.delegateId, delegated: 1, completed: 0, reviewDate: r_date, rating: ra, review: re};
-                            var rev = createReview(row);
-                            resolve(rev);
+                            const sql3 = 'UPDATE reviews SET delegated = ? WHERE filmId = ? AND reviewerId = ? AND delegateId = ?';
+
+                            db.run(sql3, [1, filmId, reviewerId, reviewerId], function(err) {
+                                if(err) {
+                                    reject(err);
+                                }
+                                else {
+                                    var row = {fid: filmId, rid: reviewerId, delegateId: review.delegateId, delegated: 1, completed: 0, reviewDate: r_date, rating: ra, review: re};
+                                    var rev = createReview(row);
+                                    resolve(rev);
+                                }
+                            })
                         }
                     });
                 }
@@ -366,7 +375,14 @@ exports.deleteDelegation = function(filmId, reviewerId, logUser) {
                     if (err)
                         reject(err);
                     else {
-                        resolve(null);
+                        const sql3 = 'UPDATE reviews SET delegated = ? WHERE filmId = ? AND reviewerId = ? AND delegateId = ?'
+
+                        db.run(sql3, [0, filmId, reviewerId, reviewerId], (err) => {
+                            if(err)
+                                reject(err);
+                            else
+                                resolve(null);
+                        })
                     }
                 });
             }
