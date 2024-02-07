@@ -523,8 +523,8 @@ paths:
       summary: Retrieve a review that has been issued/completed for a film
       description: >-
         The review of the film with ID filmID issued to the user with ID
-        reviewerId is retrieved or with ID delegateID in case the review has
-        been delegated.  This operation does not require authentication. 
+        reviewerId is retrieved. This operation does not require
+        authentication. 
       operationId: getSingleReview
       parameters:
         - name: filmId
@@ -561,12 +561,12 @@ paths:
         - cookieAuth: []
       summary: Update a review
       description: >-
-        The review of the film with ID filmId and issued or delegated to the
-        user with ID reviewerId is updated. This operation only allows setting
-        the "completed" property to the "true" value (if all the other values
-        are setted), and changing the values of the "reviewDate", "rating", and
-        "review" properties. This operation can be performed only by the invited
-        reviewer/delegated reviewer in case it has been delegated.
+        The review of the film with ID filmId and issued to the user with ID
+        reviewerId is updated. This operation only allows setting the
+        "completed" property to the "true" value (if all the other values are
+        setted), and changing the values of the "reviewDate", "rating", and
+        "review" properties. This operation can be performed only by the user
+        with ID delegateId
       operationId: updateSingleReview
       parameters:
         - name: filmId
@@ -604,8 +604,8 @@ paths:
           content: {}
         '409':
           description: >-
-            Conflict (the review has already been completed OR delegated OR the
-            review miss some fields to be checked completed)
+            Conflict (the review has already been completed OR the review miss
+            some fields to be checked completed)
           content: {}
         '500':
           description: Internal Server Error
@@ -619,9 +619,9 @@ paths:
       description: >-
         The review of the film with ID filmId and issued to the user with ID
         reviewerId is deleted. In case the review has been delegated, also the
-        review made by the user with ID delegateID is deleted. This operation
-        can only be performed by the owner, and only if the review has not yet
-        been completed by the reviewer.
+        review made by the delegated user is deleted. This operation can only be
+        performed by the owner, and only if the review has not yet been
+        completed by the delegated reviewer.
       operationId: deleteSingleReview
       parameters:
         - name: filmId
@@ -666,10 +666,8 @@ paths:
       summary: Delegate a review
       description: >-
         The review of the film with ID filmId and issued to the user with ID
-        reviewerId is delegated to another user. This operation changes the
-        values of the "delegateID" property of the invited user and the
-        "delegatorId" property of the delegated user. This operation can be
-        performed only by the invited reviewer.
+        reviewerId is delegated to another user. This operation can be performed
+        only by the invited reviewer.
       operationId: delegateReview
       parameters:
         - name: filmId
