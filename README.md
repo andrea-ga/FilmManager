@@ -6,6 +6,11 @@ The structure of this repository is the following:
   - "REST APIs Design" contains the full Open API documentation of the REST APIs, including examples of JSON documents to be used when invoking the operations, and examples of invocations of the API operations, possibly as a Postman collection;
   - "REST APIs Implementation" contains the code of the Film Manager service application.
 
+  ## How to run the code
+  - The database is located inside the folder "REST APIs Implementation"/database
+  - Run with command "npm start" inside the "REST APIs Implementation" folder
+  - To test the APIs it is possible to use the postman collection inside the "REST APIs Design" folder
+
   ## Design choices
 
   1. In order to allow the partial modification of a review, I updated the "updateSingleReview" function. Before allowing the update of the "completed" property, the function checks if all the review properties (reviewDate, rating, review) have been setted.
