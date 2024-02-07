@@ -1061,6 +1061,13 @@ components:
         reviewerId:
           type: integer
           description: unique identifier of the user who has received the review invitation
+        delegateId:
+          type: integer
+          description: unique identifier of the user who has received the review delegation
+        delegated:
+          type: boolean
+          description: true if the review has been delegated, false otherwise
+          default: 'false'
         completed:
           type: boolean
           description: true if the review has been completed, false otherwise
@@ -1116,43 +1123,6 @@ components:
           format: uri
       required:
         - totalPages
-    Draft:
-      description: schema for Draft data structures
-      type: object
-      additionalProperties: false
-      properties:
-        $schema:
-          type: string
-          description: >-
-            path to the JSON Schema to use for the validation of the JSON data
-            structure describing the film
-        filmId:
-          type: integer
-          description: >-
-            unique identifier of the film for which a review invitation has been
-            issued
-        reviewerId:
-          type: integer
-          description: unique identifier of the user who has received the review invitation
-        reviewDate:
-          type: string
-          format: date
-          description: the date when the review has been completed by the invited user
-        rating:
-          type: integer
-          description: the rating the reviewer has given to the film
-          minimum: 1
-          maximum: 10
-        review:
-          type: string
-          description: a textual description of the review
-          maxLength: 1000
-        self:
-          type: string
-          format: uri
-      required:
-        - filmId
-        - reviewerId
   securitySchemes:
     cookieAuth:
       description: JWT to identify the authenticated user.
