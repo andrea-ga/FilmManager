@@ -225,173 +225,252 @@
 			"name": "Film 4",
 			"item": [
 				{
-					"name": "Get Film 4 public reviews",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Get",
+					"item": [
+						{
+							"name": "Get Film 4 reviews",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/4/reviews",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"4",
-								"reviews"
-							]
+						{
+							"name": "Get Film 4 review by User 1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews/1",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Film 4 review by User 2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews/2",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews",
+										"2"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Film 4 pub rev by User 1",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Put",
+					"item": [
+						{
+							"name": "Edit Film 4 review by User 1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"rating\": 9}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews/1",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews",
+										"1"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/4/reviews/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"4",
-								"reviews",
-								"1"
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Film 4 pub rev by User 2",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Delete Film 4 delegation by User 1",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews/1/delegate",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews",
+										"1",
+										"delegate"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/4/reviews/2",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"4",
-								"reviews",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit Film 4 pub rev by User 1",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"rating\": 9}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Delete Film 4 review by User 2",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews/2",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews",
+										"2"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/4/reviews/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"4",
-								"reviews",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Film 4 delegation by User 1",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Delete Film 4 review by User 1",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews/1",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews",
+										"1"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/4/reviews/1/delegate",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"4",
-								"reviews",
-								"1",
-								"delegate"
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -399,273 +478,389 @@
 			"name": "Film 9",
 			"item": [
 				{
-					"name": "Get Film 9 public reviews",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Get",
+					"item": [
+						{
+							"name": "Get Film 9 reviews",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews"
-							]
+						{
+							"name": "Get Film 9 review by User 3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/3",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Film 9 review by User 4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/4",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Film 9 review by User 5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/5",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"5"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Film 9 pub rev by User 3",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Post",
+					"item": [
+						{
+							"name": "Delegation Film 9 User 4 -> User 3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"delegateId\": 3}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/4/delegate",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"4",
+										"delegate"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews/3",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews",
-								"3"
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Film 9 pub rev by User 4",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Put",
+					"item": [
+						{
+							"name": "Edit Film 9 review by User 4",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"rating\": 9}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/4",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"4"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews/4",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews",
-								"4"
-							]
+						{
+							"name": "Edit Film 9 review by User 5",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"rating\": 9}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/5",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"5"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Film 9 pub rev by User 5",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Delete Film 9 delegation by User 4",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/4/delegate",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"4",
+										"delegate"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews/5",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews",
-								"5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delegation Film 9 User 4 -> User 3",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"delegateId\": 3}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Delete Film 9 review by User 3",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/3",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"3"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews/4/delegate",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews",
-								"4",
-								"delegate"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Film 9 delegation by User 4",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Delete Film 9 review by User 4",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/4",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"4"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews/4/delegate",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews",
-								"4",
-								"delegate"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit Film 9 pub rev by User 4",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"rating\": 9}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Delete Film 9 review by User 5",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews/5",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews",
+										"5"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews/4",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews",
-								"4"
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit Film 9 pub rev by User 5",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"rating\": 9}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/9/reviews/5",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"9",
-								"reviews",
-								"5"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -673,238 +868,322 @@
 			"name": "Film 2",
 			"item": [
 				{
-					"name": "Get Film 2 public reviews",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Get",
+					"item": [
+						{
+							"name": "Get Film 2 reviews",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/2/reviews",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"2",
-								"reviews"
-							]
+						{
+							"name": "Get Film 2 review by User 2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/2",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Film 2 review by User 5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/5",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"5"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Film 2 pub rev by User 2",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Post",
+					"item": [
+						{
+							"name": "Delegation Film 2 User 5 -> User 2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"delegateId\": 2}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/5/delegate",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"5",
+										"delegate"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/2/reviews/2",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"2",
-								"reviews",
-								"2"
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Get Film 2 pub rev by User 5",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Put",
+					"item": [
+						{
+							"name": "Edit Film 2 review by User 2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"rating\": 9}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/2",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"2"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/2/reviews/5",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"2",
-								"reviews",
-								"5"
-							]
+						{
+							"name": "Edit Film 2 review by User 5",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"rating\": 9}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/5",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"5"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Delegation Film 2 User 5 -> User 2",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"delegateId\": 2}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Delete Film 2 delegation by User 5",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/5/delegate",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"5",
+										"delegate"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/2/reviews/5/delegate",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"2",
-								"reviews",
-								"5",
-								"delegate"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Film 2 delegation by User 5",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Delete Film 2 review by User 5",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/5",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"5"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/2/reviews/5/delegate",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"2",
-								"reviews",
-								"5",
-								"delegate"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit Film 2 pub rev by User 2",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"rating\": 9}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Delete Film 2 review by User 2",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews/2",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews",
+										"2"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/2/reviews/2",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"2",
-								"reviews",
-								"2"
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Edit Film 2 pub rev by User 5",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"rating\": 9}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3001/api/films/public/2/reviews/5",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"films",
-								"public",
-								"2",
-								"reviews",
-								"5"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		}
