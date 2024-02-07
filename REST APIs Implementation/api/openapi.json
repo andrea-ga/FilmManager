@@ -951,11 +951,16 @@
           }
         ],
         "requestBody": {
-          "description": "The updated Review object",
+          "description": "The reviewerId of the user to delegate",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Review"
+                "type": "object",
+                "properties": {
+                  "delegateId" : {
+                    "type" : "integer"
+                  }
+                }
               }
             }
           }
