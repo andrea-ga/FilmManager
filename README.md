@@ -14,7 +14,7 @@ The structure of this repository is the following:
 
     Since there are no constraints about it, I decided to allow an user to write more than 1 review for the same Film. This means for example, if user A and B are issued for the review of Film F1, and B decides to delegate the review of Film F1 to A, this is allowed.
 
-  3. Every time a user decides to delegate a review, after the proper checks, a new row is created in the "reviews" table. This new row has as the same fields (filmId, reviewerId, reviewDate, rating, review) of the original review. The "delegateId" of the new row gets setted to the ID of the delegated user and also the "delegated" field gets setted to 1 (True). After the insert, a Trigger inside the database updates the "delegated" field of the original review by setting it to 1 (True).
+  3. Every time a user decides to delegate a review, after the proper checks, a new row is created in the "reviews" table. This new row has as the same fields (filmId, reviewerId, reviewDate, rating, review) of the original review. The "delegateId" of the new row gets setted to the ID of the delegated user and also the "delegated" field gets setted to 1 (True). After the insert, the "delegated" field of the original review is setted it to 1 (True).
 
     Example:
     User 1 wants to delegate review of Film 1 to User 2
@@ -25,4 +25,4 @@ The structure of this repository is the following:
 
   4. Starting from this point, the only user allowed to update the review is the delegated user. After an update, the row associated to the delegated review is updated, but the original one is not modified. In this way the original review is stored in case the delegator of the review decides to delete the delegation and return to the original review.
 
-  5. When a delegation is deleted, after the proper checks, the delegated review is deleted from the database. After the delete, a Trigger inside the database updates the "delegated" field of the original review by setting it to 1 (False).
+  5. When a delegation is deleted, after the proper checks, the delegated review is deleted from the database and the "delegated" field of the original review is setted it to 1 (False).
