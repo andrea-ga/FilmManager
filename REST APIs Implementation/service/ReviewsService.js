@@ -171,7 +171,7 @@ var constants = require('../utils/constants.js');
                     for (var i = 0; i < invitations.length; i++) {
                         var singleResult;
                         try {
-                            singleResult = await issueSingleReview(sql3, invitations[i].filmId, invitations[i].reviewerId, invitations[i].reviewerId);
+                            singleResult = await issueSingleReview(sql3, invitations[i].filmId, invitations[i].reviewerId);
                             finalResult[i] = singleResult;
                         } catch (error) {
                             reject ('Error in the creation of the review data structure');
@@ -191,11 +191,11 @@ var constants = require('../utils/constants.js');
 
 const issueSingleReview = function(sql3, filmId, reviewerId){
     return new Promise((resolve, reject) => {
-        db.run(sql3, [filmId, reviewerId], function(err) {
+        db.run(sql3, [filmId, reviewerId, reviewerId], function(err) {
             if (err) {
                 reject('500');
             } else {
-                var createdReview = new Review(filmId, reviewerId, reviewerId, completed=false);
+                var createdReview = new Review(filmId, reviewerId, reviewerId, delegated=false, completed=false);
                 resolve(createdReview);
             }
         });
