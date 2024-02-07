@@ -166,12 +166,12 @@ var constants = require('../utils/constants.js');
                     reject(409);
                 }
                 else {
-                    const sql3 = 'INSERT INTO reviews(filmId, reviewerId, delegatorId, completed) VALUES(?,?,?,0)';
+                    const sql3 = 'INSERT INTO reviews(filmId, reviewerId, delegateId, delegated, completed) VALUES(?,?,?,0,0)';
                     var finalResult = [];
                     for (var i = 0; i < invitations.length; i++) {
                         var singleResult;
                         try {
-                            singleResult = await issueSingleReview(sql3, invitations[i].filmId, invitations[i].reviewerId);
+                            singleResult = await issueSingleReview(sql3, invitations[i].filmId, invitations[i].reviewerId, invitations[i].reviewerId);
                             finalResult[i] = singleResult;
                         } catch (error) {
                             reject ('Error in the creation of the review data structure');

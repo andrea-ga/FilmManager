@@ -471,6 +471,75 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Post",
+					"item": [
+						{
+							"name": "Issue Film 4 reviews",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"filmId\": 9, \"reviewerId\": 5, \"delegated\": false, \"completed\": false}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delegation Film 4 User 4 -> User 5",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"delegateId\": 5}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/4/reviews/4/delegate",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"4",
+										"reviews",
+										"4",
+										"delegate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -624,6 +693,37 @@
 				{
 					"name": "Post",
 					"item": [
+						{
+							"name": "Issue Film 9 reviews",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"filmId\": 9, \"reviewerId\": 2, \"delegated\": false, \"completed\": false}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/9/reviews",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"9",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Delegation Film 9 User 4 -> User 3",
 							"request": {
@@ -979,6 +1079,37 @@
 				{
 					"name": "Post",
 					"item": [
+						{
+							"name": "Issue Film 2 reviews",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"filmId\": 9, \"reviewerId\": 3, \"delegated\": false, \"completed\": false}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3001/api/films/public/2/reviews",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"api",
+										"films",
+										"public",
+										"2",
+										"reviews"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Delegation Film 2 User 5 -> User 2",
 							"request": {
